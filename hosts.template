@@ -1,0 +1,11 @@
+# Hosts File
+127.0.0.1 localhost
+
+# Work
+#work#dev.myproject.mycompany.com 192.168.10.1
+#!work#dev.myproject.mycompany.com 55.55.55.55
+#work#staging.myproject.mycompany.com 192.168.10.2
+#!work#staging.myproject.mycompany.com 55.55.55.56
+
+# Home
+#home#fileshare.home.local 192.168.10.1

@@ -1,0 +1,63 @@
+# genhost
+## Automating Hostfile Changes in Different Locations
+
+If you find yourself with a laptop moving from one environment to another, you might find yourself needing to change your host file regularly to work in various environments.  For instance, you might need internal ip addresses when you're inside a local network and external ip addresses when you're not.  Making this kind of repetitive change is easy, but painful to do by hand, so it's helpful to have something to automate this.  For my purposes, *genhost* is that automation.
+
+## Contents
+
+The genhost project consists of three very small things:
+ 
+ - A template that contains all the hosts you might want to access.
+ - A configuration file for `awk` to manipulate the template in order to generate a host file for a particular location.
+ - A `bash` script that contains invokes awk on your behalf.
+
+## Installation
+
+1. Make a copy of your hosts file (`/etc/hosts`) as `/etc/hosts.template`, and add markup to tell *genhost* what to do (see *Configuration*)
+2. Put `genhost` and `genhost.awk` wherever you like, and add it to your path if you feel like.  Personally, I've got them in `~/scripts`, but that's your call.
+
+## Configuration
+
+There are basically two simple patterns that `genhost` looks for:
+
+- If you want *genhost* to include an entry when you're at a location, prefix the line with `#<location>#`
+- If you want *genhost* to include an entry when you're not at a location, prefix the line with `#!<location>#`
+
+By way of example you might end up with:
+
+	# Hosts File
+	127.0.0.1 localhost
+	
+	# Work
+	#work#dev.myproject.mycompany.com 192.168.10.1
+	#!work#dev.myproject.mycompany.com 55.55.55.55
+	#work#staging.myproject.mycompany.com 192.168.10.2
+	#!work#staging.myproject.mycompany.com 55.55.55.56
+	
+	# Home
+	#home#fileshare.home.local 192.168.10.1
+	
+So when you're at work, you'll find that your dev and staging environments point to internal addresses, and when you're at home, your dev and staging environments point to external addresses, and you'll have added your fileshare.
+
+## Using `genhost`
+
+I'll assume that `genhost` is in your path, at which point all you need to do is invoke:
+
+	$ sudo genhost work
+	Generating hosts for location work.
+	
+Which, given the example above, will result in the following /etc/hosts:
+
+	# Hosts File
+	127.0.0.1 localhost
+
+	# Work
+	dev.myproject.mycompany.com 192.168.10.1
+	#dev.myproject.mycompany.com 55.55.55.55
+	staging.myproject.mycompany.com 192.168.10.2
+	#staging.myproject.mycompany.com 55.55.55.56
+
+	# Home
+	#fileshare.home.local 192.168.10.1
+
+Now switching locations is a command away.  If you want to automate it still further, and you're using Mac OS X, you might consider taking a look at [Network Location](http://networklocationapp.com/) to invoke `genhost`.
