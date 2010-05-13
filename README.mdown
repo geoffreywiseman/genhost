@@ -13,8 +13,9 @@ The genhost project consists of three very small things:
 
 ## Installation
 
-1. Make a copy of your hosts file (`/etc/hosts`) as `/etc/hosts.template`, and add markup to tell *genhost* what to do (see *Configuration*)
-2. Put `genhost` and `genhost.awk` wherever you like, and add it to your path if you feel like.  Personally, I've got them in `~/scripts`, but that's your call.
+1. Back up your hosts file (`/etc/hosts`) because something could go wrong.
+2. Make a copy of your hosts file (`/etc/hosts`) as `/etc/hosts.template`, and add markup to tell *genhost* what to do (see *Configuration*)
+3. Put `genhost` and `genhost.awk` wherever you like, and add it to your path if you feel like.  Personally, I've got them in `~/scripts`, but that's your call.
 
 ## Configuration
 
