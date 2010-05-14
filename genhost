@@ -1,6 +1,6 @@
 #!/bin/bash
 if [ -n "$1" ]; then
-  echo Generating hosts for location $1.
+  echo "Generating hosts for location '$1'."
   awk -v loc=$1 -f "$0.awk" /etc/hosts.template > /etc/hosts
 else
   echo "SYNTAX: genhost <location>"
